@@ -1,0 +1,22 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/background</item>
+
+        <!-- Action bar -->
+        <item name="actionBarStyle">@style/AppActionBarStyle</item>
+        <item name="actionBarBackground">@color/primaryLightColor</item>
+
+        <item name="dividerColor">@color/dividerColor</item>
+    </style>
+
+    <style name="AppActionBarStyle" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
+        <item name="background">?attr/actionBarBackground</item>
+        <item name="backgroundStacked">?attr/actionBarBackground</item>
+        <item name="backgroundSplit">?attr/actionBarBackground</item>
+    </style>
+
+</resources>

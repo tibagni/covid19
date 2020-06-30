@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/total_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/total_lbl"
+                app:layout_constraintEnd_toEndOf="@+id/new_txt"
+                app:layout_constraintTop_toTopOf="@+id/total_lbl"
+                tools:text="12345678987" />
+
+            <TextView
+                android:id="@+id/total_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/summary_total"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/new_lbl"
+                app:layout_constraintTop_toBottomOf="@+id/new_lbl" />
+
+            <TextView
+                android:id="@+id/new_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/new_lbl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/new_lbl"
+                tools:text="12345678" />
+
+            <TextView
+                android:id="@+id/new_lbl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/summary_new"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Title" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/dividerColor"
+                app:layout_constraintBottom_toBottomOf="@+id/new_txt"
+                app:layout_constraintEnd_toStartOf="@+id/new_txt"
+                app:layout_constraintStart_toEndOf="@+id/new_lbl" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/dividerColor"
+                app:layout_constraintBottom_toBottomOf="@+id/total_txt"
+                app:layout_constraintEnd_toStartOf="@+id/total_txt"
+                app:layout_constraintStart_toEndOf="@+id/total_lbl" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

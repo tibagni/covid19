@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Covid</string>
+    <string name="summary_new">Last 24 hours</string>
+    <string name="summary_total">Total</string>
+    <string name="global_summary_title">Global summary</string>
+    <string name="cases_title">Cases</string>
+    <string name="deaths_title">Deaths</string>
+    <string name="recovered_title">Recovered</string>
+    <string name="updated_at">updated at %1$s</string>
+</resources>
