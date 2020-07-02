@@ -2,6 +2,7 @@ package com.tibagni.covid.di
 
 import android.content.Context
 import androidx.room.Room
+import com.tibagni.covid.localdb.CountrySummaryDao
 import com.tibagni.covid.localdb.Covid19Database
 import com.tibagni.covid.localdb.SummaryDao
 import dagger.Module
@@ -28,5 +29,10 @@ object DatabaseModule {
     @Provides
     fun provideSummaryDao(db: Covid19Database): SummaryDao {
         return db.summaryDao()
+    }
+
+    @Provides
+    fun provideCountrySummaryDao(db: Covid19Database): CountrySummaryDao {
+        return db.countrySummaryDao()
     }
 }

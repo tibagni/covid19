@@ -1,6 +1,7 @@
 package com.tibagni.covid.repository
 
 import com.tibagni.covid.api.SummaryAPIResponse
+import com.tibagni.covid.countries.CountrySummary
 import com.tibagni.covid.summary.Summary
 
 /**
@@ -17,4 +18,21 @@ fun SummaryAPIResponse.toSummary(): Summary {
         this.global.totalRecovered,
         System.currentTimeMillis()
     )
+}
+
+fun SummaryAPIResponse.toCountrySummaryList(): List<CountrySummary> {
+    val now = System.currentTimeMillis()
+    return this.countries.map {
+        CountrySummary(
+            it.countryCode,
+            it.country,
+            it.newConfirmed,
+            it.totalConfirmed,
+            it.newDeaths,
+            it.totalDeaths,
+            it.newRecovered,
+            it.totalRecovered,
+            now
+        )
+    }
 }

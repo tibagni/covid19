@@ -3,8 +3,10 @@ package com.tibagni.covid.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.tibagni.covid.api.Covid19API
+import com.tibagni.covid.countries.CountrySummary
 import com.tibagni.covid.di.IoExecutor
 import com.tibagni.covid.di.MainExecutor
+import com.tibagni.covid.localdb.CountrySummaryDao
 import com.tibagni.covid.localdb.SummaryDao
 import com.tibagni.covid.summary.Summary
 import com.tibagni.covid.utils.MutableSingleEventLiveData
@@ -17,6 +19,7 @@ import javax.inject.Singleton
 class Covid19Repository @Inject constructor(
     private val api: Covid19API,
     private val summaryDao: SummaryDao,
+    private val countrySummaryDao: CountrySummaryDao,
     @IoExecutor private val executor: Executor,
     @MainExecutor private val uiExecutor: Executor
 ) {
@@ -28,6 +31,11 @@ class Covid19Repository @Inject constructor(
         return summaryDao.load()
     }
 
+    fun getCountriesSummary(): LiveData<List<CountrySummary>> {
+        refreshSummary(false)
+        return countrySummaryDao.loadAll()
+    }
+
     fun refreshSummary(forceRefresh: Boolean) {
         executor.execute {
             if (!forceRefresh && !shouldRefreshSummary()) return@execute
@@ -37,7 +45,9 @@ class Covid19Repository @Inject constructor(
                 val response = api.getSummary().execute()
                 val summaryResponse = response.body()
                 summaryResponse?.let { summaryDao.save(it.toSummary()) }
-                uiExecutor.execute { _summaryLoadingStatus.value = LoadingStatus.success() }
+                summaryResponse?.let { countrySummaryDao.saveAll(it.toCountrySummaryList()) }
+                uiExecutor.execute {
+                    _summaryLoadingStatus.value = LoadingStatus.success() }
             } catch (exception: Exception) {
                 Log.w("Covid19Repository", "Failed to fetch from API", exception)
                 uiExecutor.execute {

@@ -84,7 +84,7 @@ class SummaryFragment : Fragment() {
         viewModel.loadingStatus.observe(viewLifecycleOwner) {
             view.swipe_container.isRefreshing = (it.status == LoadingStatus.Status.LOADING)
             if (it.status == LoadingStatus.Status.ERROR) {
-                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.load_fail), Toast.LENGTH_SHORT).show()
             }
         }
     }
