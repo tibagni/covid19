@@ -15,4 +15,7 @@ interface CountrySummaryDao {
 
     @Query("SELECT * FROM countrysummary")
     fun loadAll(): LiveData<List<CountrySummary>>
+
+    @Query("SELECT * FROM countrysummary WHERE countryName like :filter")
+    fun loadFiltered(filter: String): LiveData<List<CountrySummary>>
 }

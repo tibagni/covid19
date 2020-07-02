@@ -36,6 +36,10 @@ class Covid19Repository @Inject constructor(
         return countrySummaryDao.loadAll()
     }
 
+    fun getCountriesSummaryFiltered(filter: String): LiveData<List<CountrySummary>> {
+        return countrySummaryDao.loadFiltered("%$filter%")
+    }
+
     fun refreshSummary(forceRefresh: Boolean) {
         executor.execute {
             if (!forceRefresh && !shouldRefreshSummary()) return@execute
@@ -47,7 +51,8 @@ class Covid19Repository @Inject constructor(
                 summaryResponse?.let { summaryDao.save(it.toSummary()) }
                 summaryResponse?.let { countrySummaryDao.saveAll(it.toCountrySummaryList()) }
                 uiExecutor.execute {
-                    _summaryLoadingStatus.value = LoadingStatus.success() }
+                    _summaryLoadingStatus.value = LoadingStatus.success()
+                }
             } catch (exception: Exception) {
                 Log.w("Covid19Repository", "Failed to fetch from API", exception)
                 uiExecutor.execute {

@@ -2,13 +2,12 @@ package com.tibagni.covid.countries
 
 import android.content.Context
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,9 +24,19 @@ import kotlinx.android.synthetic.main.countries_fragment.view.swipe_container
 import kotlinx.android.synthetic.main.country_summary_item.view.*
 
 @AndroidEntryPoint
-class CountriesFragment : Fragment() {
+class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private val viewModel: CountriesViewModel by viewModels()
+
+    init {
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.country_summary_menu, menu)
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -136,6 +145,13 @@ class CountriesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onQueryTextSubmit(query: String?) = true
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        viewModel.filter(newText ?: "")
+        return true
     }
 
 }
