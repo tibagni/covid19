@@ -6,16 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tibagni.covid.R
 import com.tibagni.covid.repository.LoadingStatus
 import com.tibagni.covid.utils.Expandable
 import com.tibagni.covid.utils.format
+import com.tibagni.covid.utils.formatDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.countries_fragment.view.*
 import kotlinx.android.synthetic.main.countries_fragment.view.swipe_container
@@ -86,6 +89,8 @@ class CountriesFragment : Fragment() {
         private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val context: Context = view.context
             val titleTxt: TextView = view.title
+            val subtitleTxt: TextView = view.subtitle
+            val flagImg: ImageView = view.flag
             val newTxt: TextView = view.new_txt
             val totalTxt: TextView = view.total_txt
             val newDeathsTxt: TextView = view.new_deaths_txt
@@ -111,8 +116,24 @@ class CountriesFragment : Fragment() {
                 newRecoveredTxt.text = countrySummary.content.newRecovered.format(context)
                 totalRecoveredTxt.text = countrySummary.content.totalRecovered.format(context)
 
-                expandableView.visibility =
-                    if (countrySummary.isExpanded) View.VISIBLE else View.GONE
+                val flagUrl =
+                    "https://www.countryflags.io/${countrySummary.content.countryCode}/flat/64.png"
+                Glide.with(context).load(flagUrl).into(flagImg)
+
+                if (countrySummary.isExpanded) {
+                    subtitleTxt.text = context.getString(
+                        R.string.updated_at,
+                        countrySummary.content.updatedAt.formatDate()
+                    )
+                    expandableView.visibility = View.VISIBLE
+                } else {
+                    subtitleTxt.text = context.getString(
+                        R.string.subtitle_summary,
+                        countrySummary.content.newConfirmed.format(context),
+                        countrySummary.content.newDeaths.format(context)
+                    )
+                    expandableView.visibility = View.GONE
+                }
             }
         }
     }
