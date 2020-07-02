@@ -14,19 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tibagni.covid.R
 import com.tibagni.covid.repository.LoadingStatus
+import com.tibagni.covid.utils.Expandable
 import com.tibagni.covid.utils.format
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.countries_fragment.view.*
 import kotlinx.android.synthetic.main.countries_fragment.view.swipe_container
 import kotlinx.android.synthetic.main.country_summary_item.view.*
-import kotlinx.android.synthetic.main.summary_fragment.view.*
 
 @AndroidEntryPoint
 class CountriesFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = CountriesFragment()
-    }
 
     private val viewModel: CountriesViewModel by viewModels()
 
@@ -62,8 +58,9 @@ class CountriesFragment : Fragment() {
         }
     }
 
-    private class CountriesAdapter(private val countries: ArrayList<CountrySummary> = arrayListOf()) :
+    private class CountriesAdapter(items: List<CountrySummary> = arrayListOf()) :
         RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
+        val countries = items.map { Expandable(it) }.toMutableList()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater
@@ -81,12 +78,12 @@ class CountriesFragment : Fragment() {
         fun refreshData(newCountries: List<CountrySummary>) {
             with(this.countries) {
                 clear()
-                addAll(newCountries)
+                addAll(newCountries.map { Expandable(it) })
             }
             notifyDataSetChanged()
         }
 
-        private class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val context: Context = view.context
             val titleTxt: TextView = view.title
             val newTxt: TextView = view.new_txt
@@ -95,15 +92,27 @@ class CountriesFragment : Fragment() {
             val totalDeathsTxt: TextView = view.total_deaths_txt
             val newRecoveredTxt: TextView = view.new_recovered_txt
             val totalRecoveredTxt: TextView = view.total_recovered_txt
+            val expandableView: View = view.expandable
 
-            fun bind(countrySummary: CountrySummary) {
-                titleTxt.text = countrySummary.countryName
-                newTxt.text = countrySummary.newConfirmed.format(context)
-                totalTxt.text = countrySummary.totalConfirmed.format(context)
-                newDeathsTxt.text = countrySummary.newDeaths.format(context)
-                totalDeathsTxt.text = countrySummary.totalDeaths.format(context)
-                newRecoveredTxt.text = countrySummary.newRecovered.format(context)
-                totalRecoveredTxt.text = countrySummary.totalRecovered.format(context)
+            init {
+                titleTxt.setOnClickListener {
+                    val countrySummary = countries[adapterPosition]
+                    countrySummary.toggle()
+                    notifyItemChanged(adapterPosition)
+                }
+            }
+
+            fun bind(countrySummary: Expandable<CountrySummary>) {
+                titleTxt.text = countrySummary.content.countryName
+                newTxt.text = countrySummary.content.newConfirmed.format(context)
+                totalTxt.text = countrySummary.content.totalConfirmed.format(context)
+                newDeathsTxt.text = countrySummary.content.newDeaths.format(context)
+                totalDeathsTxt.text = countrySummary.content.totalDeaths.format(context)
+                newRecoveredTxt.text = countrySummary.content.newRecovered.format(context)
+                totalRecoveredTxt.text = countrySummary.content.totalRecovered.format(context)
+
+                expandableView.visibility =
+                    if (countrySummary.isExpanded) View.VISIBLE else View.GONE
             }
         }
     }

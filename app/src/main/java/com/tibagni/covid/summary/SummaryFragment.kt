@@ -25,10 +25,6 @@ import kotlinx.android.synthetic.main.summary_item.view.title
 @AndroidEntryPoint
 class SummaryFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = SummaryFragment()
-    }
-
     private val viewModel: SummaryViewModel by viewModels()
 
     override fun onCreateView(
