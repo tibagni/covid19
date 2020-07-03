@@ -70,7 +70,7 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
         }
     }
 
-    private class CountriesAdapter(items: List<CountrySummary> = arrayListOf()) :
+    private inner class CountriesAdapter(items: List<CountrySummary> = arrayListOf()) :
         RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
         val countries = items.map { Expandable(it) }.toMutableList()
 
@@ -99,6 +99,7 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
             val context: Context = view.context
             val titleTxt: TextView = view.title
             val subtitleTxt: TextView = view.subtitle
+            val pinIcon: ImageView = view.pin_icon
             val flagImg: ImageView = view.flag
             val newTxt: TextView = view.new_txt
             val totalTxt: TextView = view.total_txt
@@ -110,8 +111,15 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
 
             init {
                 titleTxt.setOnClickListener {
-                    val countrySummary = countries[adapterPosition]
-                    countrySummary.toggle()
+                    val expandable = countries[adapterPosition]
+                    expandable.toggle()
+                    notifyItemChanged(adapterPosition)
+                }
+
+                pinIcon.setOnClickListener {
+                    val countrySummary = countries[adapterPosition].content
+                    countrySummary.isPinned = !countrySummary.isPinned
+                    viewModel.updateCountrySummary(countrySummary)
                     notifyItemChanged(adapterPosition)
                 }
             }
@@ -124,6 +132,14 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                 totalDeathsTxt.text = countrySummary.content.totalDeaths.format(context)
                 newRecoveredTxt.text = countrySummary.content.newRecovered.format(context)
                 totalRecoveredTxt.text = countrySummary.content.totalRecovered.format(context)
+
+                pinIcon.setImageResource(
+                    if (countrySummary.content.isPinned) {
+                        R.drawable.ic_bookmark_black_24dp
+                    } else {
+                        R.drawable.ic_bookmark_border_black_24dp
+                    }
+                )
 
                 val flagUrl =
                     "https://www.countryflags.io/${countrySummary.content.countryCode}/flat/64.png"

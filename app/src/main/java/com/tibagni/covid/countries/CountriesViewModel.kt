@@ -18,7 +18,6 @@ class CountriesViewModel @ViewModelInject constructor(
     private val filter = MutableLiveData<String>()
 
     val loadingStatus = repository.summaryLoadingStatus
-    //val countriesSummary = repository.getCountriesSummary()
     val countriesSummary = Transformations.switchMap(filter) {
         if (TextUtils.isEmpty(it)) {
             repository.getCountriesSummary()
@@ -29,6 +28,10 @@ class CountriesViewModel @ViewModelInject constructor(
 
     init {
         filter.value = ""
+    }
+
+    fun updateCountrySummary(countrySummary: CountrySummary) {
+        repository.updateCountrySummary(countrySummary)
     }
 
     fun refresh() {

@@ -13,5 +13,6 @@ data class CountrySummary(
     val totalDeaths: Int,
     val newRecovered: Int,
     val totalRecovered: Int,
-    val updatedAt: Long
+    val updatedAt: Long,
+    var isPinned: Boolean = false
 )

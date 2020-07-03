@@ -40,6 +40,12 @@ class Covid19Repository @Inject constructor(
         return countrySummaryDao.loadFiltered("%$filter%")
     }
 
+    fun updateCountrySummary(countrySummary: CountrySummary) {
+        executor.execute {
+            countrySummaryDao.update(countrySummary)
+        }
+    }
+
     fun refreshSummary(forceRefresh: Boolean) {
         executor.execute {
             if (!forceRefresh && !shouldRefreshSummary()) return@execute
