@@ -119,7 +119,7 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
             val expandableView: View = view.expandable
 
             init {
-                titleTxt.setOnClickListener {
+                view.title_area.setOnClickListener {
                     val expandable = countries[adapterPosition]
                     expandable.toggle()
                     notifyItemChanged(adapterPosition)

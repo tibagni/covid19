@@ -8,6 +8,9 @@
         <item name="actionBarBackground">@color/primaryLightColor</item>
 
         <item name="dividerColor">@color/dividerColor</item>
+
+        <item name="android:statusBarColor">?attr/actionBarBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppActionBarStyle" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
