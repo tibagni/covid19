@@ -17,14 +17,26 @@ class CountriesViewModel @ViewModelInject constructor(
 ) : ViewModel() {
     private val filter = MutableLiveData<String>()
 
-    val loadingStatus = repository.summaryLoadingStatus
-    val countriesSummary = Transformations.switchMap(filter) {
+    private val countriesSummary = Transformations.switchMap(filter) {
         if (TextUtils.isEmpty(it)) {
             repository.getCountriesSummary()
         } else {
             repository.getCountriesSummaryFiltered(it)
         }
     }
+    val sortedCountriesSummary = Transformations.map(countriesSummary) {
+        _sortingState.apply(it)
+    }
+
+    val loadingStatus = repository.summaryLoadingStatus
+
+    private var _sortingState: SortingState = SortingState.EMPTY
+    var sortingState: SortingState
+        get() = _sortingState
+        set(value) {
+            _sortingState = value
+            filter.value = filter.value // Just to trigger a new query
+        }
 
     init {
         filter.value = ""

@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.country_summary_item.view.*
 @AndroidEntryPoint
 class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    private val viewModel: CountriesViewModel by viewModels()
+    private val viewModel: CountriesViewModel by viewModels({requireActivity()})
 
     init {
         setHasOptionsMenu(true)
@@ -36,6 +36,15 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater.inflate(R.menu.country_summary_menu, menu)
         val searchView = menu.findItem(R.id.search).actionView as SearchView
         searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.sort) {
+            SortCountriesDialogFragment().show(parentFragmentManager, "sort_dialog")
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateView(
@@ -58,7 +67,7 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
             viewModel.refresh()
         }
 
-        viewModel.countriesSummary.observe(viewLifecycleOwner) {
+        viewModel.sortedCountriesSummary.observe(viewLifecycleOwner) {
             countriesAdapter.refreshData(it)
         }
 
@@ -152,11 +161,29 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                     )
                     expandableView.visibility = View.VISIBLE
                 } else {
-                    subtitleTxt.text = context.getString(
-                        R.string.subtitle_summary,
-                        countrySummary.content.newConfirmed.format(context),
-                        countrySummary.content.newDeaths.format(context)
-                    )
+                    when (viewModel.sortingState.sortBy) {
+                        SortingState.SortField.CASES ->  subtitleTxt.text = context.getString(
+                            R.string.subtitle_summary_cases,
+                            countrySummary.content.totalConfirmed.format(context),
+                            countrySummary.content.newConfirmed.format(context)
+                        )
+                        SortingState.SortField.DEATHS ->  subtitleTxt.text = context.getString(
+                            R.string.subtitle_summary_deaths,
+                            countrySummary.content.totalDeaths.format(context),
+                            countrySummary.content.newDeaths.format(context)
+                        )
+                        SortingState.SortField.RECOVERED ->  subtitleTxt.text = context.getString(
+                            R.string.subtitle_summary_recovered,
+                            countrySummary.content.totalRecovered.format(context),
+                            countrySummary.content.newRecovered.format(context)
+                        )
+                        else -> subtitleTxt.text = context.getString(
+                            R.string.subtitle_summary,
+                            countrySummary.content.newConfirmed.format(context),
+                            countrySummary.content.newDeaths.format(context)
+                        )
+                    }
+
                     expandableView.visibility = View.GONE
                 }
             }

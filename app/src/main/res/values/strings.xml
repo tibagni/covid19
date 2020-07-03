@@ -12,6 +12,19 @@
     <string name="title_summary">Summary</string>
     <string name="title_countries">Countries</string>
     <string name="subtitle_summary">%1$s cases and %2$s deaths in last 24 hours</string>
+    <string name="subtitle_summary_cases">%1$s cases and %2$s in last 24 hours</string>
+    <string name="subtitle_summary_deaths">%1$s deaths and %2$s in last 24 hours</string>
+    <string name="subtitle_summary_recovered">%1$s recovered and %2$s in last 24 hours</string>
     <string name="load_fail">Failed to load</string>
     <string name="search">Search</string>
+    <string name="clear">Clear</string>
+    <string name="sort_by_cases">Cases</string>
+    <string name="sort_by_deaths">Deaths</string>
+    <string name="sort_by_recovered">Recovered</string>
+    <string name="sort_by_last_24">Last 24 hours</string>
+    <string name="sort_by_total">Total</string>
+    <string name="sort_by_ascending">Ascending</string>
+    <string name="sort_by_descending">Descending</string>
+    <string name="content_description_sort">Sorting icon</string>
+    <string name="sort_by_title">Sort by...</string>
 </resources>

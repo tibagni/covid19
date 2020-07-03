@@ -1,6 +1,9 @@
 package com.tibagni.covid.utils
 
 import android.content.Context
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.get
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,3 +18,9 @@ fun Int.format(context: Context?): String {
 }
 
 fun Long.formatDate(): String = SimpleDateFormat().format(Date(this))
+
+fun ViewGroup.enableChildren(enable: Boolean) {
+    for (i in 0 until this.childCount) {
+        this[i].isEnabled = enable
+    }
+}

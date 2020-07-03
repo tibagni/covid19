@@ -14,10 +14,10 @@ interface CountrySummaryDao {
     @JvmSuppressWildcards
     fun saveAll(countrySummaryList: List<CountrySummary>)
 
-    @Query("SELECT * FROM countrysummary ORDER BY isPinned DESC, countryName ASC")
+    @Query("SELECT * FROM countrysummary ORDER BY isPinned DESC")
     fun loadAll(): LiveData<List<CountrySummary>>
 
-    @Query("SELECT * FROM countrysummary WHERE countryName LIKE :filter ORDER BY isPinned DESC, countryName ASC")
+    @Query("SELECT * FROM countrysummary WHERE countryName LIKE :filter ORDER BY isPinned DESC")
     fun loadFiltered(filter: String): LiveData<List<CountrySummary>>
 
     @Update
