@@ -4,4 +4,5 @@
     <attr name="actionBarBackground" format="reference"/>
 
     <attr name="dividerColor" format="reference"/>
+    <attr name="defaultBackground" format="reference"/>
 </resources>

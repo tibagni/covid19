@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -37,9 +38,24 @@ class SummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val summaryItemsAdapter = SummaryItemsAdapter(
             arrayOf(
-                SummaryItemData(getString(R.string.cases_title), 0, 0),
-                SummaryItemData(getString(R.string.deaths_title), 0, 0),
-                SummaryItemData(getString(R.string.recovered_title), 0, 0)
+                SummaryItemData(
+                    R.drawable.ic_coronavirus_black_24dp,
+                    getString(R.string.cases_title),
+                    0,
+                    0
+                ),
+                SummaryItemData(
+                    R.drawable.ic_rip_black_24dp,
+                    getString(R.string.deaths_title),
+                    0,
+                    0
+                ),
+                SummaryItemData(
+                    R.drawable.ic_healing_black_24dp,
+                    getString(R.string.recovered_title),
+                    0,
+                    0
+                )
             )
         )
 
@@ -55,19 +71,23 @@ class SummaryFragment : Fragment() {
 
         viewModel.summary.observe(viewLifecycleOwner) {
             it?.let {
-                summaryItemsAdapter.refreshData(it.updatedAt,
+                summaryItemsAdapter.refreshData(
+                    it.updatedAt,
                     arrayOf(
                         SummaryItemData(
+                            R.drawable.ic_coronavirus_black_24dp,
                             getString(R.string.cases_title),
                             it.newConfirmed,
                             it.totalConfirmed
                         ),
                         SummaryItemData(
+                            R.drawable.ic_rip_black_24dp,
                             getString(R.string.deaths_title),
                             it.newDeaths,
                             it.totalDeaths
                         ),
                         SummaryItemData(
+                            R.drawable.ic_healing_black_24dp,
                             getString(R.string.recovered_title),
                             it.newRecovered,
                             it.totalRecovered
@@ -123,6 +143,7 @@ class SummaryFragment : Fragment() {
                 val vh = holder as ItemViewHolder
                 val itemData = itemsData[position - 1] // header is at 0
 
+                vh.icon.setImageResource(itemData.icon)
                 vh.titleTxt.text = itemData.title
                 vh.newTxt.text = itemData.new.format(vh.context)
                 vh.totalTxt.text = itemData.total.format(vh.context)
@@ -140,6 +161,7 @@ class SummaryFragment : Fragment() {
         }
 
         private class ItemViewHolder(view: View) : ViewHolder(view) {
+            val icon: ImageView = view.icon
             val titleTxt: TextView = view.title
             val newTxt: TextView = view.new_txt
             val totalTxt: TextView = view.total_txt
@@ -150,6 +172,12 @@ class SummaryFragment : Fragment() {
         }
     }
 
-    private data class SummaryItemData(val title: String, val new: Int, val total: Int)
+    private data class SummaryItemData(
+        val icon: Int,
+        val title: String,
+        val new: Int,
+        val total: Int
+    )
+
     private data class SummaryHeaderData(var updatedAt: Long)
 }

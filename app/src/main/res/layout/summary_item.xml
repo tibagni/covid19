@@ -64,10 +64,10 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title" />
 
@@ -90,6 +90,16 @@
                 app:layout_constraintBottom_toBottomOf="@+id/total_txt"
                 app:layout_constraintEnd_toStartOf="@+id/total_txt"
                 app:layout_constraintStart_toEndOf="@+id/total_lbl" />
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/title"
+                app:srcCompat="@drawable/ic_coronavirus_black_24dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
