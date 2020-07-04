@@ -25,8 +25,8 @@ data class SortingState(val sortBy: SortField, val period: SortPeriod, val asc: 
 
             val total = period == SortPeriod.ALL
             when {
-                a.isPinned -> -1
-                b.isPinned -> 1
+                a.isPinned == true -> -1
+                b.isPinned == true -> 1
                 else -> when (sortBy) {
                     SortField.CASES ->
                         if (total) a.totalConfirmed.compareTo(b.totalConfirmed) * multiplier

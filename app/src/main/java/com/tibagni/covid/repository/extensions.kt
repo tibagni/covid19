@@ -20,8 +20,9 @@ fun SummaryAPIResponse.toSummary(): Summary {
     )
 }
 
-fun SummaryAPIResponse.toCountrySummaryList(): List<CountrySummary> {
+fun SummaryAPIResponse.toCountrySummaryList(pinned: List<CountrySummary>): List<CountrySummary> {
     val now = System.currentTimeMillis()
+    val pinnedSet = pinned.map { it.countryCode }.toSet()
     return this.countries.map {
         CountrySummary(
             it.countryCode,
@@ -32,7 +33,8 @@ fun SummaryAPIResponse.toCountrySummaryList(): List<CountrySummary> {
             it.totalDeaths,
             it.newRecovered,
             it.totalRecovered,
-            now
+            now,
+            pinnedSet.contains(it.countryCode)
         )
     }
 }

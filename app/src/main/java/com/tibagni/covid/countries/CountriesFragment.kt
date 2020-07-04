@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.country_summary_item.view.*
 @AndroidEntryPoint
 class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    private val viewModel: CountriesViewModel by viewModels({requireActivity()})
+    private val viewModel: CountriesViewModel by viewModels({ requireActivity() })
 
     init {
         setHasOptionsMenu(true)
@@ -97,11 +98,24 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         fun refreshData(newCountries: List<CountrySummary>) {
+            val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    val old = countries[oldItemPosition].content
+                    val new = newCountries[newItemPosition]
+                    return old.countryCode == new.countryCode
+                }
+
+                override fun getOldListSize() = countries.size
+                override fun getNewListSize() = newCountries.size
+
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                    countries[oldItemPosition].content == newCountries[newItemPosition]
+            })
             with(this.countries) {
                 clear()
                 addAll(newCountries.map { Expandable(it) })
             }
-            notifyDataSetChanged()
+            diffResult.dispatchUpdatesTo(this)
         }
 
         private inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -162,17 +176,17 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                     expandableView.visibility = View.VISIBLE
                 } else {
                     when (viewModel.sortingState.sortBy) {
-                        SortingState.SortField.CASES ->  subtitleTxt.text = context.getString(
+                        SortingState.SortField.CASES -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary_cases,
                             countrySummary.content.totalConfirmed.format(context),
                             countrySummary.content.newConfirmed.format(context)
                         )
-                        SortingState.SortField.DEATHS ->  subtitleTxt.text = context.getString(
+                        SortingState.SortField.DEATHS -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary_deaths,
                             countrySummary.content.totalDeaths.format(context),
                             countrySummary.content.newDeaths.format(context)
                         )
-                        SortingState.SortField.RECOVERED ->  subtitleTxt.text = context.getString(
+                        SortingState.SortField.RECOVERED -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary_recovered,
                             countrySummary.content.totalRecovered.format(context),
                             countrySummary.content.newRecovered.format(context)

@@ -54,8 +54,10 @@ class Covid19Repository @Inject constructor(
             try {
                 val response = api.getSummary().execute()
                 val summaryResponse = response.body()
+                // Retrieve current pinned countries so we don't lose the pinned state
+                val pinned = countrySummaryDao.getAllPinned()
                 summaryResponse?.let { summaryDao.save(it.toSummary()) }
-                summaryResponse?.let { countrySummaryDao.saveAll(it.toCountrySummaryList()) }
+                summaryResponse?.let { countrySummaryDao.saveAll(it.toCountrySummaryList(pinned)) }
                 uiExecutor.execute {
                     _summaryLoadingStatus.value = LoadingStatus.success()
                 }
