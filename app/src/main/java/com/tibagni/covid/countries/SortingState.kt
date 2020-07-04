@@ -21,28 +21,31 @@ data class SortingState(val sortBy: SortField, val period: SortPeriod, val asc: 
 
     fun apply(unsorted: List<CountrySummary>): List<CountrySummary> {
         return unsorted.sortedWith(Comparator { a, b ->
-            val multiplier = if (asc) 1 else -1
-
-            val total = period == SortPeriod.ALL
             when {
-                a.isPinned == true -> -1
-                b.isPinned == true -> 1
-                else -> when (sortBy) {
-                    SortField.CASES ->
-                        if (total) a.totalConfirmed.compareTo(b.totalConfirmed) * multiplier
-                        else a.newConfirmed.compareTo(b.newConfirmed) * multiplier
-
-                    SortField.DEATHS ->
-                        if (total) a.totalDeaths.compareTo(b.totalDeaths) * multiplier
-                        else a.newDeaths.compareTo(b.newDeaths) * multiplier
-
-                    SortField.RECOVERED ->
-                        if (total) a.totalRecovered.compareTo(b.totalRecovered) * multiplier
-                        else a.newRecovered.compareTo(b.newRecovered) * multiplier
-
-                    SortField.NAME -> a.countryName.compareTo(b.countryName) * multiplier
-                }
+                a.isPinned && !b.isPinned -> -1
+                b.isPinned && !a.isPinned -> 1
+                else -> sortByField(a, b)
             }
         })
+    }
+
+    private fun sortByField(a: CountrySummary, b: CountrySummary): Int {
+        val multiplier = if (asc) 1 else -1
+        val total = period == SortPeriod.ALL
+        return when (sortBy) {
+            SortField.CASES ->
+                if (total) a.totalConfirmed.compareTo(b.totalConfirmed) * multiplier
+                else a.newConfirmed.compareTo(b.newConfirmed) * multiplier
+
+            SortField.DEATHS ->
+                if (total) a.totalDeaths.compareTo(b.totalDeaths) * multiplier
+                else a.newDeaths.compareTo(b.newDeaths) * multiplier
+
+            SortField.RECOVERED ->
+                if (total) a.totalRecovered.compareTo(b.totalRecovered) * multiplier
+                else a.newRecovered.compareTo(b.newRecovered) * multiplier
+
+            SortField.NAME -> a.countryName.compareTo(b.countryName) * multiplier
+        }
     }
 }
