@@ -52,6 +52,10 @@
         <include
             android:id="@+id/item_recovered"
             layout="@layout/summary_item" />
+
+        <include
+            android:id="@+id/top_countries"
+            layout="@layout/top_countries" />
     </LinearLayout>
 
 </ScrollView>

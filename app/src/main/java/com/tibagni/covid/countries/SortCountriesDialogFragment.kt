@@ -17,28 +17,28 @@ class SortCountriesDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
         private val resToOrderByFieldMap = mapOf(
-            R.id.by_cases to SortingState.SortField.CASES,
-            R.id.by_deaths to SortingState.SortField.DEATHS,
-            R.id.by_recovered to SortingState.SortField.RECOVERED,
-            View.NO_ID to SortingState.SortField.NAME
+            R.id.by_cases to CountrySummarySortingState.SortField.CASES,
+            R.id.by_deaths to CountrySummarySortingState.SortField.DEATHS,
+            R.id.by_recovered to CountrySummarySortingState.SortField.RECOVERED,
+            View.NO_ID to CountrySummarySortingState.SortField.NAME
         )
 
         private val orderByFieldToResMap = mapOf(
-            SortingState.SortField.CASES to R.id.by_cases,
-            SortingState.SortField.DEATHS to R.id.by_deaths,
-            SortingState.SortField.RECOVERED to R.id.by_recovered,
-            SortingState.SortField.NAME to View.NO_ID
+            CountrySummarySortingState.SortField.CASES to R.id.by_cases,
+            CountrySummarySortingState.SortField.DEATHS to R.id.by_deaths,
+            CountrySummarySortingState.SortField.RECOVERED to R.id.by_recovered,
+            CountrySummarySortingState.SortField.NAME to View.NO_ID
         )
 
         private val resToPeriodMap = mapOf(
-            R.id.total to SortingState.SortPeriod.ALL,
-            R.id.last_24 to SortingState.SortPeriod.LAST_24_HOURS,
-            View.NO_ID to SortingState.PERIOD_DEFAULT
+            R.id.total to CountrySummarySortingState.SortPeriod.ALL,
+            R.id.last_24 to CountrySummarySortingState.SortPeriod.LAST_24_HOURS,
+            View.NO_ID to CountrySummarySortingState.PERIOD_DEFAULT
         )
 
         private val periodToResMap = mapOf(
-            SortingState.SortPeriod.ALL to R.id.total,
-            SortingState.SortPeriod.LAST_24_HOURS to R.id.last_24
+            CountrySummarySortingState.SortPeriod.ALL to R.id.total,
+            CountrySummarySortingState.SortPeriod.LAST_24_HOURS to R.id.last_24
         )
     }
 
@@ -64,21 +64,21 @@ class SortCountriesDialogFragment : BottomSheetDialogFragment() {
             totalNewGroup.enableChildren(checkedId != View.NO_ID)
         }
 
-        totalNewGroup.enableChildren(viewModel.sortingState.sortBy != SortingState.SortField.NAME)
+        totalNewGroup.enableChildren(viewModel.sortingState.sortBy != CountrySummarySortingState.SortField.NAME)
 
-        view.clear.setOnClickListener { initializeState(SortingState.EMPTY) }
+        view.clear.setOnClickListener { initializeState(CountrySummarySortingState.EMPTY) }
         view.ok.setOnClickListener {
             val field =
-                resToOrderByFieldMap[sortByGroup.checkedChipId] ?: SortingState.SortField.NAME
-            val period = resToPeriodMap[totalNewGroup.checkedChipId] ?: SortingState.SortPeriod.ALL
+                resToOrderByFieldMap[sortByGroup.checkedChipId] ?: CountrySummarySortingState.SortField.NAME
+            val period = resToPeriodMap[totalNewGroup.checkedChipId] ?: CountrySummarySortingState.SortPeriod.ALL
             val asc = view.asc.isChecked
-            viewModel.sortingState = SortingState(field, period, asc)
+            viewModel.sortingState = CountrySummarySortingState(field, period, asc)
             dismiss()
         }
         view.cancel.setOnClickListener { dismiss() }
     }
 
-    private fun initializeState(state: SortingState) {
+    private fun initializeState(state: CountrySummarySortingState) {
         val checkedField = orderByFieldToResMap[state.sortBy] ?: View.NO_ID
         val checkedPeriod = periodToResMap[state.period] ?: View.NO_ID
         val checkedAscDesc = if (state.asc) R.id.asc else R.id.desc

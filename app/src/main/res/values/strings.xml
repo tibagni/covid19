@@ -10,6 +10,17 @@
     <string name="loading">Loading...</string>
     <string name="refresh">Refresh</string>
 
+    <string-array name="top_5_sort_by">
+        <item>@string/cases_title</item>
+        <item>@string/deaths_title</item>
+        <item>@string/recovered_title</item>
+    </string-array>
+
+    <string-array name="top_5_period">
+        <item>@string/summary_total</item>
+        <item>@string/summary_new</item>
+    </string-array>
+
 
     <string name="title_summary">Summary</string>
     <string name="title_countries">Countries</string>

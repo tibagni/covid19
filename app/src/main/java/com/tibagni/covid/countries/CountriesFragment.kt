@@ -176,17 +176,17 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                     expandableView.visibility = View.VISIBLE
                 } else {
                     when (viewModel.sortingState.sortBy) {
-                        SortingState.SortField.CASES -> subtitleTxt.text = context.getString(
+                        CountrySummarySortingState.SortField.CASES -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary_cases,
                             countrySummary.content.totalConfirmed.format(context),
                             countrySummary.content.newConfirmed.format(context)
                         )
-                        SortingState.SortField.DEATHS -> subtitleTxt.text = context.getString(
+                        CountrySummarySortingState.SortField.DEATHS -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary_deaths,
                             countrySummary.content.totalDeaths.format(context),
                             countrySummary.content.newDeaths.format(context)
                         )
-                        SortingState.SortField.RECOVERED -> subtitleTxt.text = context.getString(
+                        CountrySummarySortingState.SortField.RECOVERED -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary_recovered,
                             countrySummary.content.totalRecovered.format(context),
                             countrySummary.content.newRecovered.format(context)

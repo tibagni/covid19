@@ -30,8 +30,8 @@ class CountriesViewModel @ViewModelInject constructor(
 
     val loadingStatus = repository.summaryLoadingStatus
 
-    private var _sortingState: SortingState = SortingState.EMPTY
-    var sortingState: SortingState
+    private var _sortingState: CountrySummarySortingState = CountrySummarySortingState.EMPTY
+    var sortingState: CountrySummarySortingState
         get() = _sortingState
         set(value) {
             _sortingState = value

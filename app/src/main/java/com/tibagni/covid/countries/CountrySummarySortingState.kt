@@ -1,6 +1,10 @@
 package com.tibagni.covid.countries
 
-data class SortingState(val sortBy: SortField, val period: SortPeriod, val asc: Boolean) {
+data class CountrySummarySortingState(
+    val sortBy: SortField,
+    val period: SortPeriod,
+    val asc: Boolean
+) {
 
     enum class SortPeriod {
         ALL,
@@ -16,9 +20,13 @@ data class SortingState(val sortBy: SortField, val period: SortPeriod, val asc: 
 
     companion object {
         val PERIOD_DEFAULT = SortPeriod.ALL
-        val EMPTY = SortingState(SortField.NAME, PERIOD_DEFAULT, true)
+        val EMPTY = CountrySummarySortingState(SortField.NAME, PERIOD_DEFAULT, true)
     }
 
+    /**
+     * Apply the sorting state to the given countries summary list keeping the pinned
+     * countries first
+     */
     fun apply(unsorted: List<CountrySummary>): List<CountrySummary> {
         return unsorted.sortedWith(Comparator { a, b ->
             when {
@@ -27,6 +35,14 @@ data class SortingState(val sortBy: SortField, val period: SortPeriod, val asc: 
                 else -> sortByField(a, b)
             }
         })
+    }
+
+    /**
+     * Apply the sorting state to the given countries summary list but without placing the pinned
+     * countries first
+     */
+    fun applyUnpinned(unsorted: List<CountrySummary>): List<CountrySummary> {
+        return unsorted.sortedWith(Comparator { a, b -> sortByField(a, b) })
     }
 
     private fun sortByField(a: CountrySummary, b: CountrySummary): Int {

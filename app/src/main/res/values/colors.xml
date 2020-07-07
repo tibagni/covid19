@@ -7,4 +7,12 @@
     <color name="primaryTextColor">#000000</color>
     <color name="dividerColor">#37000000</color>
     <color name="background">#34F4F4F4</color>
+
+    <string-array name="top5_chart_colors">
+        <item>#FB9F82</item>
+        <item>#B98AB9</item>
+        <item>#FBBC6D</item>
+        <item>#90BFE1</item>
+        <item>#90C494</item>
+    </string-array>
 </resources>
