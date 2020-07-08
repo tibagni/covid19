@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_globe_black_24dp"
         android:title="@string/title_countries" />
 
+    <item
+        android:id="@+id/navigation_news"
+        android:icon="@drawable/ic_newspaper_black_24dp"
+        android:title="@string/title_news" />
+
 </menu>

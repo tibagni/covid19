@@ -3,7 +3,6 @@ package com.tibagni.covid.summary
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.ProxyFileDescriptorCallback
 import android.view.*
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment

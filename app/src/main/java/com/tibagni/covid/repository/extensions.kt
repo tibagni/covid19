@@ -1,8 +1,11 @@
 package com.tibagni.covid.repository
 
+import com.tibagni.covid.api.NewsHeadlinesAPIResponse
 import com.tibagni.covid.api.SummaryAPIResponse
 import com.tibagni.covid.countries.CountrySummary
+import com.tibagni.covid.news.Article
 import com.tibagni.covid.summary.Summary
+import com.tibagni.covid.utils.toMillis
 
 /**
  * Extension to convert from Retrofit to Room types
@@ -35,6 +38,19 @@ fun SummaryAPIResponse.toCountrySummaryList(pinned: List<CountrySummary>): List<
             it.totalRecovered,
             now,
             pinnedSet.contains(it.countryCode)
+        )
+    }
+}
+
+fun NewsHeadlinesAPIResponse.toNewsList(): List<Article> {
+    return this.articles.map {
+        Article(
+            it.title,
+            it.description,
+            it.image,
+            it.url,
+            it.source.name,
+            it.publishedAt.toMillis("yyyy-MM-dd HH:mm:ss 'UTC'")
         )
     }
 }

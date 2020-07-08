@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.core.view.get
+import java.lang.Exception
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,4 +35,18 @@ fun Spinner.onSelectionChanged(callback: () -> Unit) {
             callback()
         }
     }
+}
+
+fun String.toMillis(dateFormat: String): Long {
+    return try {
+        val formatter = SimpleDateFormat(dateFormat)
+        val date = formatter.parse(this)
+        date.time
+    } catch (e: Exception) {
+        0L
+    }
+}
+
+fun String?.or(defaultStr: String): String {
+    return if (this.isNullOrBlank()) defaultStr else this
 }

@@ -17,4 +17,10 @@
         android:label="@string/title_countries"
         tools:layout="@layout/countries_fragment" />
 
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.tibagni.covid.news.NewsFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/news_fragment" />
+
 </navigation>

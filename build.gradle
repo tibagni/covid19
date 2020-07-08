@@ -17,6 +17,12 @@ buildscript {
     }
 }
 
+def getBuildProperty(String property){
+    Properties properties = new Properties()
+    properties.load(new FileInputStream("build_properties"))
+    return "\"" + properties.getProperty(property) +"\""
+}
+
 allprojects {
     repositories {
         google()
