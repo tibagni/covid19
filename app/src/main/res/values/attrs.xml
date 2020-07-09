@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Action Bar colors -->
-    <attr name="actionBarBackground" format="reference"/>
+    <attr name="actionBarBackground" format="reference" />
 
-    <attr name="dividerColor" format="reference"/>
-    <attr name="defaultBackground" format="reference"/>
+    <attr name="dividerColor" format="reference" />
+    <attr name="defaultBackground" format="reference" />
+
+    <declare-styleable name="EmptyableRecyclerView">
+        <attr name="emptyView" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView">
+        <attr name="empty_state" format="enum">
+            <enum name="no_data" value="0"/>
+            <enum name="loading" value="1"/>
+            <enum name="error" value="2"/>
+        </attr>
+    </declare-styleable>
 </resources>

@@ -16,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tibagni.covid.R
 import com.tibagni.covid.repository.LoadingStatus
-import com.tibagni.covid.utils.Expandable
+import com.tibagni.covid.view.Expandable
 import com.tibagni.covid.utils.format
 import com.tibagni.covid.utils.formatDate
+import com.tibagni.covid.view.EmptyView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.countries_fragment.view.*
-import kotlinx.android.synthetic.main.countries_fragment.view.swipe_container
 import kotlinx.android.synthetic.main.country_summary_item.view.*
 
 @AndroidEntryPoint
@@ -64,20 +64,23 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
             adapter = countriesAdapter
         }
 
-        view.swipe_container.setOnRefreshListener {
-            viewModel.refresh()
-        }
-
         viewModel.sortedCountriesSummary.observe(viewLifecycleOwner) {
             countriesAdapter.refreshData(it)
         }
 
         viewModel.loadingStatus.observe(viewLifecycleOwner) {
-            view.swipe_container.isRefreshing = (it.status == LoadingStatus.Status.LOADING)
+            view.emptyView.emptyState = when (it.status) {
+                LoadingStatus.Status.LOADING -> EmptyView.STATE_LOADING
+                LoadingStatus.Status.ERROR -> EmptyView.STATE_ERROR
+                LoadingStatus.Status.SUCCESS -> EmptyView.STATE_NO_DATA
+            }
+
             if (it.status == LoadingStatus.Status.ERROR) {
                 Toast.makeText(context, getString(R.string.load_fail), Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.refresh(false)
     }
 
     private inner class CountriesAdapter(items: List<CountrySummary> = arrayListOf()) :
@@ -176,21 +179,24 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                     expandableView.visibility = View.VISIBLE
                 } else {
                     when (viewModel.sortingState.sortBy) {
-                        CountrySummarySortingState.SortField.CASES -> subtitleTxt.text = context.getString(
-                            R.string.subtitle_summary_cases,
-                            countrySummary.content.totalConfirmed.format(context),
-                            countrySummary.content.newConfirmed.format(context)
-                        )
-                        CountrySummarySortingState.SortField.DEATHS -> subtitleTxt.text = context.getString(
-                            R.string.subtitle_summary_deaths,
-                            countrySummary.content.totalDeaths.format(context),
-                            countrySummary.content.newDeaths.format(context)
-                        )
-                        CountrySummarySortingState.SortField.RECOVERED -> subtitleTxt.text = context.getString(
-                            R.string.subtitle_summary_recovered,
-                            countrySummary.content.totalRecovered.format(context),
-                            countrySummary.content.newRecovered.format(context)
-                        )
+                        CountrySummarySortingState.SortField.CASES -> subtitleTxt.text =
+                            context.getString(
+                                R.string.subtitle_summary_cases,
+                                countrySummary.content.totalConfirmed.format(context),
+                                countrySummary.content.newConfirmed.format(context)
+                            )
+                        CountrySummarySortingState.SortField.DEATHS -> subtitleTxt.text =
+                            context.getString(
+                                R.string.subtitle_summary_deaths,
+                                countrySummary.content.totalDeaths.format(context),
+                                countrySummary.content.newDeaths.format(context)
+                            )
+                        CountrySummarySortingState.SortField.RECOVERED -> subtitleTxt.text =
+                            context.getString(
+                                R.string.subtitle_summary_recovered,
+                                countrySummary.content.totalRecovered.format(context),
+                                countrySummary.content.newRecovered.format(context)
+                            )
                         else -> subtitleTxt.text = context.getString(
                             R.string.subtitle_summary,
                             countrySummary.content.newConfirmed.format(context),

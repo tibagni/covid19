@@ -1,4 +1,4 @@
-package com.tibagni.covid.utils
+package com.tibagni.covid.view
 
 class Expandable <T> (val content: T) {
     var isExpanded: Boolean = false

@@ -6,20 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".countries.CountriesFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
-        android:layout_width="match_parent"
+    <com.tibagni.covid.view.EmptyableRecyclerView
+        android:id="@+id/country_summary_items"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        app:emptyView="@id/emptyView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="3"
+        tools:listitem="@layout/country_summary_item" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/country_summary_items"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:itemCount="3"
-            tools:listitem="@layout/country_summary_item" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <com.tibagni.covid.view.EmptyView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:empty_state="no_data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

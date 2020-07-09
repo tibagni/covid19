@@ -22,6 +22,7 @@ import com.tibagni.covid.R
 import com.tibagni.covid.countries.CountrySummarySortingState
 import com.tibagni.covid.repository.LoadingStatus
 import com.tibagni.covid.utils.*
+import com.tibagni.covid.view.onSelectionChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.summary_fragment.view.*
 import kotlinx.android.synthetic.main.summary_item.view.*

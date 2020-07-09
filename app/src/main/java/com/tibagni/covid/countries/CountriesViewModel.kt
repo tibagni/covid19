@@ -46,8 +46,8 @@ class CountriesViewModel @ViewModelInject constructor(
         repository.updateCountrySummary(countrySummary)
     }
 
-    fun refresh() {
-        repository.refreshSummary(true)
+    fun refresh(forceRefresh: Boolean) {
+        repository.refreshSummary(forceRefresh)
     }
 
     fun filter(filterText: String) {

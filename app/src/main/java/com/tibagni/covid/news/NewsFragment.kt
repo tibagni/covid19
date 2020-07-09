@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
@@ -16,10 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tibagni.covid.R
+import com.tibagni.covid.repository.LoadingStatus
 import com.tibagni.covid.utils.formatDate
 import com.tibagni.covid.utils.or
+import com.tibagni.covid.view.EmptyView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.countries_fragment.view.*
 import kotlinx.android.synthetic.main.news_fragment.view.*
+import kotlinx.android.synthetic.main.news_fragment.view.emptyView
 import kotlinx.android.synthetic.main.news_item.view.*
 
 @AndroidEntryPoint
@@ -46,6 +51,20 @@ class NewsFragment : Fragment() {
                 newsAdapter.refreshData(it)
             }
         }
+
+        viewModel.loadingStatus.observe(viewLifecycleOwner) {
+            view.emptyView.emptyState = when (it.status) {
+                LoadingStatus.Status.LOADING -> EmptyView.STATE_LOADING
+                LoadingStatus.Status.ERROR -> EmptyView.STATE_ERROR
+                LoadingStatus.Status.SUCCESS -> EmptyView.STATE_NO_DATA
+            }
+
+            if (it.status == LoadingStatus.Status.ERROR) {
+                Toast.makeText(context, getString(R.string.load_fail), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.refresh(false)
     }
 
     private inner class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {

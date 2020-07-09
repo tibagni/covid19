@@ -33,7 +33,7 @@ class NewsRepository @Inject constructor(
         return newsDao.loadAll()
     }
 
-    private fun refreshNews(forceRefresh: Boolean) {
+    fun refreshNews(forceRefresh: Boolean) {
         executor.execute {
             if (!forceRefresh && !shouldRefreshNews()) {
                 // Avoid fetching data from the API when it is not needed

@@ -21,6 +21,10 @@
         <item>@string/summary_new</item>
     </string-array>
 
+    <string name="no_data_state">There is no data available</string>
+    <string name="loading_state">Loading...</string>
+    <string name="error_state">Error loading data. Check your internet connection</string>
+
 
     <string name="title_summary">Summary</string>
     <string name="title_countries">Countries</string>

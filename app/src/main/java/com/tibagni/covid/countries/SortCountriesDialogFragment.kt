@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.ChipGroup
 import com.tibagni.covid.R
-import com.tibagni.covid.utils.enableChildren
+import com.tibagni.covid.view.enableChildren
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_sort_countries_dialog.view.*
 
