@@ -5,6 +5,7 @@ import com.tibagni.covid.api.SummaryAPIResponse
 import com.tibagni.covid.countries.CountrySummary
 import com.tibagni.covid.news.Article
 import com.tibagni.covid.summary.Summary
+import com.tibagni.covid.utils.ResourceHelper
 import com.tibagni.covid.utils.toMillis
 
 /**
@@ -23,13 +24,16 @@ fun SummaryAPIResponse.toSummary(): Summary {
     )
 }
 
-fun SummaryAPIResponse.toCountrySummaryList(pinned: List<CountrySummary>): List<CountrySummary> {
+fun SummaryAPIResponse.toCountrySummaryList(
+    pinned: List<CountrySummary>,
+    resData: ResourceData
+): List<CountrySummary> {
     val now = System.currentTimeMillis()
     val pinnedSet = pinned.map { it.countryCode }.toSet()
     return this.countries.map {
         CountrySummary(
             it.countryCode,
-            it.country,
+            resData.getStringData(ResourceHelper.getCountryName(it.countryCode), it.country),
             it.newConfirmed,
             it.totalConfirmed,
             it.newDeaths,

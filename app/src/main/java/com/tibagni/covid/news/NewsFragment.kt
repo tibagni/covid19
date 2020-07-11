@@ -1,6 +1,5 @@
 package com.tibagni.covid.news
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,7 +21,6 @@ import com.tibagni.covid.utils.formatDate
 import com.tibagni.covid.utils.or
 import com.tibagni.covid.view.EmptyView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.countries_fragment.view.*
 import kotlinx.android.synthetic.main.news_fragment.view.*
 import kotlinx.android.synthetic.main.news_fragment.view.emptyView
 import kotlinx.android.synthetic.main.news_item.view.*

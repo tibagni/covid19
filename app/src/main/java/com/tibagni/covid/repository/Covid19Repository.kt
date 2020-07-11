@@ -19,6 +19,7 @@ class Covid19Repository @Inject constructor(
     private val api: Covid19API,
     private val summaryDao: SummaryDao,
     private val countrySummaryDao: CountrySummaryDao,
+    private val resourceData: ResourceData,
     @IoExecutor private val executor: Executor
 ) {
     val summaryLoadingStatus: LiveData<LoadingStatus> get() = _summaryLoadingStatus
@@ -57,7 +58,14 @@ class Covid19Repository @Inject constructor(
                 // Retrieve current pinned countries so we don't lose the pinned state
                 val pinned = countrySummaryDao.getAllPinned()
                 summaryResponse?.let { summaryDao.save(it.toSummary()) }
-                summaryResponse?.let { countrySummaryDao.saveAll(it.toCountrySummaryList(pinned)) }
+                summaryResponse?.let {
+                    countrySummaryDao.saveAll(
+                        it.toCountrySummaryList(
+                            pinned,
+                            resourceData
+                        )
+                    )
+                }
                 _summaryLoadingStatus.postValue(LoadingStatus.success())
             } catch (exception: Exception) {
                 Log.w("Covid19Repository", "Failed to fetch from API", exception)

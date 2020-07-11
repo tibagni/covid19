@@ -13,9 +13,9 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.tibagni.covid.R
 import com.tibagni.covid.repository.LoadingStatus
+import com.tibagni.covid.utils.ResourceHelper
 import com.tibagni.covid.view.Expandable
 import com.tibagni.covid.utils.format
 import com.tibagni.covid.utils.formatDate
@@ -158,6 +158,11 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                 totalDeathsTxt.text = countrySummary.content.totalDeaths.format(context)
                 newRecoveredTxt.text = countrySummary.content.newRecovered.format(context)
                 totalRecoveredTxt.text = countrySummary.content.totalRecovered.format(context)
+                flagImg.setImageResource(
+                    ResourceHelper.getCountryFlag(
+                        countrySummary.content.countryCode
+                    )
+                )
 
                 pinIcon.setImageResource(
                     if (countrySummary.content.isPinned) {
@@ -166,10 +171,6 @@ class CountriesFragment : Fragment(), SearchView.OnQueryTextListener {
                         R.drawable.ic_bookmark_border_black_24dp
                     }
                 )
-
-                val flagUrl =
-                    "https://www.countryflags.io/${countrySummary.content.countryCode}/flat/64.png"
-                Glide.with(context).load(flagUrl).into(flagImg)
 
                 if (countrySummary.isExpanded) {
                     subtitleTxt.text = context.getString(
