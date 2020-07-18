@@ -161,8 +161,8 @@ class SummaryFragment : Fragment() {
     private fun initChart(chart: PieChart) {
         chart.setDrawEntryLabels(false)
         chart.description = null
-        chart.rotationAngle = 0f;
-        chart.isRotationEnabled = false;
+        chart.rotationAngle = 0f
+        chart.isRotationEnabled = false
         val l = chart.legend
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         l.textSize = 12f
@@ -175,7 +175,7 @@ class SummaryFragment : Fragment() {
             PieEntry(
                 it.stat.toFloat(),
                 it.countryName,
-                resources.getDrawable(ResourceHelper.getCountryFlag(it.countryCode))
+                resources.getDrawable(ResourceHelper.getCountryFlag(it.countryCode), null)
             )
         }
         val chartDataSet = PieDataSet(entries, "")
