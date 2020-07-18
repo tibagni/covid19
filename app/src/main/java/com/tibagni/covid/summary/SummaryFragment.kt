@@ -38,7 +38,8 @@ class SummaryFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.summary_menu, menu)
         val refreshMenuItem = menu.findItem(R.id.refresh)
-        refreshAnimationHandler = RefreshAnimationHandler(requireContext(), refreshMenuItem)
+        refreshAnimationHandler =
+            RefreshAnimationHandler(requireContext(), lifecycle, refreshMenuItem)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
