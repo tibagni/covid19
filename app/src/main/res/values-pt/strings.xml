@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Covid 19 Stats</string>
+    <string name="summary_new">Últimas 24 horas</string>
+    <string name="summary_total">Total</string>
+    <string name="global_summary_title">Resumo global</string>
+    <string name="cases_title">Casos</string>
+    <string name="deaths_title">Mortes</string>
+    <string name="recovered_title">Recuperados</string>
+    <string name="updated_at">atualizado em %1$s</string>
+    <string name="loading">Carregando...</string>
+    <string name="refresh">Atualizar</string>
+
+    <string-array name="top_5_sort_by">
+        <item>@string/cases_title</item>
+        <item>@string/deaths_title</item>
+        <item>@string/recovered_title</item>
+    </string-array>
+
+    <string-array name="top_5_period">
+        <item>@string/summary_total</item>
+        <item>@string/summary_new</item>
+    </string-array>
+
+    <string name="no_data_state">Dados indisponíveis</string>
+    <string name="loading_state">Carregando...</string>
+    <string name="error_state">Erro ao carregar os dados. Verifique sua conexão com a internet</string>
+
+
+    <string name="title_summary">Resumo</string>
+    <string name="title_countries">Países</string>
+    <string name="title_news">Notícias</string>
+    <string name="subtitle_summary">%1$s casos e %2$s mortes nas últimas 24 horas</string>
+    <string name="subtitle_summary_cases">%1$s casos. %2$s nas últimas 24 horas</string>
+    <string name="subtitle_summary_deaths">%1$s mortes. %2$s nas últimas 24 horas</string>
+    <string name="subtitle_summary_recovered">%1$s recuperados. %2$s nas últimas 24 horas</string>
+    <string name="load_fail">Falha ao carregar</string>
+    <string name="search">Busca</string>
+    <string name="clear">Limpar</string>
+    <string name="sort_by_cases">Casos</string>
+    <string name="sort_by_deaths">Mortes</string>
+    <string name="sort_by_recovered">Recuperados</string>
+    <string name="sort_by_last_24">Últimas 24 horas</string>
+    <string name="sort_by_total">Total</string>
+    <string name="sort_by_ascending">Crescente</string>
+    <string name="sort_by_descending">Decrescente</string>
+    <string name="content_description_sort">Ícone de ordenação</string>
+    <string name="sort_by_title">Ordenar por...</string>
+</resources>
