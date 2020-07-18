@@ -19,6 +19,12 @@ android {
 
         buildConfigField "String", "NEWS_BASE_URL", getBuildProperty("newsBaseUrl")
         buildConfigField "String", "APP_CENTER_SECRET", getBuildProperty("appCenterSecret")
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
 
     buildTypes {

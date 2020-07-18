@@ -13,7 +13,7 @@ import com.tibagni.covid.summary.Summary
         CountrySummary::class,
         Article::class,
         NewsMeta::class
-    ], version = 1, exportSchema = false
+    ], version = 1
 )
 abstract class Covid19Database : RoomDatabase() {
     abstract fun summaryDao(): SummaryDao
