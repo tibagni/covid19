@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme.v21" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primaryColor</item>
 
         <!-- Action bar -->
@@ -10,9 +10,10 @@
         <item name="dividerColor">@color/dividerColor</item>
 
         <item name="android:statusBarColor">?attr/actionBarBackground</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="defaultBackground">@color/background</item>
     </style>
+
+    <style name="AppTheme" parent="AppTheme.v21" />
 
     <style name="AppActionBarStyle" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
         <item name="background">?attr/actionBarBackground</item>
