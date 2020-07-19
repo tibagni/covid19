@@ -7,7 +7,7 @@
     <string name="deaths_title">Mortes</string>
     <string name="recovered_title">Recuperados</string>
     <string name="updated_at">atualizado em %1$s</string>
-    <string name="loading">Carregando...</string>
+    <string name="loading">Carregando…</string>
     <string name="refresh">Atualizar</string>
 
     <string-array name="top_5_sort_by">
@@ -22,7 +22,7 @@
     </string-array>
 
     <string name="no_data_state">Dados indisponíveis</string>
-    <string name="loading_state">Carregando...</string>
+    <string name="loading_state">Carregando…</string>
     <string name="error_state">Erro ao carregar os dados. Verifique sua conexão com a internet</string>
 
 
@@ -44,5 +44,5 @@
     <string name="sort_by_ascending">Crescente</string>
     <string name="sort_by_descending">Decrescente</string>
     <string name="content_description_sort">Ícone de ordenação</string>
-    <string name="sort_by_title">Ordenar por...</string>
+    <string name="sort_by_title">Ordenar por…</string>
 </resources>

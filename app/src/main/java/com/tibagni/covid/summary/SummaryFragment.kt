@@ -1,12 +1,11 @@
 package com.tibagni.covid.summary
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.github.mikephil.charting.charts.PieChart
@@ -18,7 +17,10 @@ import com.github.mikephil.charting.utils.MPPointF
 import com.tibagni.covid.R
 import com.tibagni.covid.countries.CountrySummarySortingState
 import com.tibagni.covid.repository.LoadingStatus
-import com.tibagni.covid.utils.*
+import com.tibagni.covid.utils.RefreshAnimationHandler
+import com.tibagni.covid.utils.ResourceHelper
+import com.tibagni.covid.utils.format
+import com.tibagni.covid.utils.formatDate
 import com.tibagni.covid.view.onSelectionChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.summary_fragment.view.*

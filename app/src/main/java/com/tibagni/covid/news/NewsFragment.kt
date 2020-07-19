@@ -45,7 +45,7 @@ class NewsFragment : Fragment() {
             adapter = newsAdapter
         }
         viewModel.articles.observe(viewLifecycleOwner) {
-            it?.let {
+            it.let {
                 newsAdapter.refreshData(it)
             }
         }

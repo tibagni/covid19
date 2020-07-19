@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface AndroidModule {
     @Singleton
     @Binds
-    fun provideAndroidResourceData(resData: AndroidResourceData): ResourceData;
+    fun provideAndroidResourceData(resData: AndroidResourceData): ResourceData
 }
